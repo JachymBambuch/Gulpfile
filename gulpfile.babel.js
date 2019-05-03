@@ -68,9 +68,9 @@ const javascript = () => {
         __dirname + '/' + devFolder + 'src/js'
       ]
     }))
-    .pipe(babel({
-      presets: ['env']
-    }))
+    // .pipe(babel({
+    //   presets: ['env']
+    // }))
     .pipe(uglify({
       mangle: false,
       output: {
