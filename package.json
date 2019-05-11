@@ -28,9 +28,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sass-glob": "^1.0.9",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
-    "js-yaml": "^3.13.1",
-    "node-gyp": "^4.0.0"
+    "gulp-uglify": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
