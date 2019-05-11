@@ -3,7 +3,7 @@ import plumber from 'gulp-plumber';
 import htmlmin from 'gulp-htmlmin';
 import sassglob from 'gulp-sass-glob';
 import sass from 'gulp-sass';
-import cssnano from 'gulp-cssnano';
+import cleancss from 'gulp-clean-css';
 import autoprefixer from 'gulp-autoprefixer';
 import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
@@ -47,7 +47,7 @@ const scss = () => {
     .pipe(sassglob())
     .pipe(sass())
     .pipe(autoprefixer('>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 10'))
-    .pipe(cssnano())
+    .pipe(cleancss())
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(distFolder + 'src/css/'));
@@ -68,9 +68,9 @@ const javascript = () => {
         __dirname + '/' + devFolder + 'src/js'
       ]
     }))
-    // .pipe(babel({
-    //   presets: ['env']
-    // }))
+    .pipe(babel({
+      presets: ['env']
+    }))
     .pipe(uglify({
       mangle: false,
       output: {
@@ -150,10 +150,11 @@ const watchFiles = () => {
   gulp.watch([devFolder + 'src/json/*.json', devFolder + 'src/json/**/*.json'], gulp.parallel('json'));
   gulp.watch([devFolder + 'src/fonts/*'], gulp.parallel('fonts'));
   gulp.watch([devFolder + 'src/plugins/*'], gulp.parallel('plugins'));
-  gulp.watch([devFolder + 'images/*', devFolder + 'images/**/*'], gulp.parallel('images'));
   gulp.watch([devFolder + 'images/icons/*'], gulp.parallel('icons'));
+  gulp.watch([devFolder + 'images/*', devFolder + 'images/**/*'], gulp.parallel('images'));
 }
 
+const serve = gulp.parallel(html, scss, javascript, json, fonts, plugins, icons, images);
 const build = gulp.parallel(startServer, watchFiles, reload);
 
 export {
@@ -167,7 +168,8 @@ export {
   icons,
   startServer,
   watchFiles,
+  serve,
   build
 }
 
-exports.default = build;
+export default build;
